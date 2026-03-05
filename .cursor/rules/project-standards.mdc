@@ -1,0 +1,33 @@
+---
+description: Standards du projet Sport Boutique - Next.js 15, WooCommerce headless
+alwaysApply: true
+---
+
+# Règles du projet Sport Boutique
+
+## Stack technique
+- Next.js 15 (App Router uniquement, jamais Pages Router)
+- TypeScript strict
+- Tailwind CSS pour le style (pas de CSS inline)
+- Framer Motion pour les animations
+- Zustand pour l'état global
+- API GraphQL WordPress : `process.env.NEXT_PUBLIC_GRAPHQL_ENDPOINT`
+
+## Architecture
+- Composants serveur par défaut ; `"use client"` uniquement si nécessaire (interactivité, hooks)
+- Un composant = un fichier
+- Composants réutilisables : `/components/ui/`
+- Composants de section : `/components/[nom-section]/`
+- Typage strict avec interfaces TypeScript
+
+## Design futuriste
+- Couleurs sombres : `#0a0a0a`, `#1a1a2e`
+- Accents néon : `#00FF88`, `#00D4FF`
+- Classes Tailwind : `bg-dark-100`, `text-neon-green`, `border-neon-blue`, etc.
+
+## Conventions
+- Composants : PascalCase
+- Fonctions : camelCase
+- Variables d'environnement : SCREAMING_SNAKE_CASE
+- Images : toujours `next/image` avec optimisation
+- SEO : inclure les metadata dans chaque page
