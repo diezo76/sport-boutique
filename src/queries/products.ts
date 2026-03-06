@@ -29,10 +29,20 @@ export const GET_PRODUCTS = gql`
               altText
             }
           }
+          productCategories {
+            nodes {
+              name
+              slug
+            }
+          }
         }
         ... on VariableProduct {
           price
           regularPrice
+          image {
+            sourceUrl
+            altText
+          }
           variations {
             nodes {
               id
@@ -47,11 +57,11 @@ export const GET_PRODUCTS = gql`
               }
             }
           }
-        }
-        productCategories {
-          nodes {
-            name
-            slug
+          productCategories {
+            nodes {
+              name
+              slug
+            }
           }
         }
       }
@@ -85,6 +95,13 @@ export const GET_PRODUCT_BY_SLUG = gql`
           nodes {
             sourceUrl
             altText
+          }
+        }
+        productCategories {
+          nodes {
+            id
+            slug
+            name
           }
         }
       }
@@ -124,12 +141,44 @@ export const GET_PRODUCT_BY_SLUG = gql`
             }
           }
         }
+        productCategories {
+          nodes {
+            id
+            slug
+            name
+          }
+        }
       }
-      productCategories {
-        nodes {
-          id
-          slug
-          name
+    }
+  }
+`;
+
+// Produits featured / bestsellers pour la page d'accueil
+export const GET_FEATURED_PRODUCTS = gql`
+  query GetFeaturedProducts($first: Int) {
+    products(first: $first, where: { featured: true }) {
+      nodes {
+        id
+        databaseId
+        slug
+        name
+        ... on SimpleProduct {
+          price
+          regularPrice
+          salePrice
+          stockStatus
+          image {
+            sourceUrl
+            altText
+          }
+        }
+        ... on VariableProduct {
+          price
+          regularPrice
+          image {
+            sourceUrl
+            altText
+          }
         }
       }
     }

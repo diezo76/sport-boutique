@@ -14,16 +14,12 @@ interface ProductGalleryProps {
   productName: string;
 }
 
-export default function ProductGallery({
-  images,
-  productName,
-}: ProductGalleryProps) {
+export default function ProductGallery({ images, productName }: ProductGalleryProps) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [isZoomed, setIsZoomed] = useState(false);
   const [zoomPosition, setZoomPosition] = useState({ x: 50, y: 50 });
 
-  const displayImages =
-    images.length > 0 ? images : [{ sourceUrl: "", altText: productName }];
+  const displayImages = images.length > 0 ? images : [{ sourceUrl: "", altText: productName }];
   const currentImage = displayImages[selectedIndex];
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -36,9 +32,8 @@ export default function ProductGallery({
 
   return (
     <div className="space-y-4">
-      {/* Image principale avec zoom */}
       <motion.div
-        className="relative aspect-square overflow-hidden rounded-lg border border-white/10 bg-dark-300"
+        className="relative aspect-square overflow-hidden rounded-2xl bg-v-card"
         onMouseEnter={() => setIsZoomed(true)}
         onMouseLeave={() => setIsZoomed(false)}
         onMouseMove={handleMouseMove}
@@ -51,9 +46,7 @@ export default function ProductGallery({
             className={`relative w-full h-full transition-transform duration-300 ${
               isZoomed ? "scale-150" : "scale-100"
             }`}
-            style={{
-              transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,
-            }}
+            style={{ transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%` }}
           >
             <Image
               src={currentImage.sourceUrl}
@@ -65,18 +58,17 @@ export default function ProductGallery({
             />
           </div>
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-dark-400">
+          <div className="absolute inset-0 flex items-center justify-center text-v-muted">
             <span className="text-6xl">📦</span>
           </div>
         )}
-        {/* Overlay zoom hint */}
         <AnimatePresence>
           {isZoomed && currentImage.sourceUrl && (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute bottom-2 right-2 bg-dark-400/80 text-neon-green text-xs px-2 py-1 rounded font-mono"
+              className="absolute bottom-3 right-3 bg-v-bg/80 text-v-muted text-xs px-3 py-1 rounded-full"
             >
               Zoom actif
             </motion.div>
@@ -84,17 +76,16 @@ export default function ProductGallery({
         </AnimatePresence>
       </motion.div>
 
-      {/* Miniatures */}
       {displayImages.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto pb-2">
+        <div className="flex gap-3 overflow-x-auto pb-2">
           {displayImages.map((img, i) => (
             <motion.button
               key={i}
               onClick={() => setSelectedIndex(i)}
-              className={`relative flex-shrink-0 w-16 h-16 rounded overflow-hidden border-2 transition-all ${
+              className={`relative flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
                 selectedIndex === i
-                  ? "border-neon-green shadow-[0_0_12px_rgba(0,255,136,0.5)]"
-                  : "border-white/10 hover:border-white/30"
+                  ? "border-v-white"
+                  : "border-v-border hover:border-v-muted"
               }`}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.98 }}

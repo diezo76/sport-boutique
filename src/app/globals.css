@@ -1,104 +1,98 @@
 @import "tailwindcss";
 
-/* Dark mode basé sur la classe .dark */
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --v-bg: #0d0d0d;
+  --v-card: #141414;
+  --v-card-hover: #1a1a1a;
+  --v-border: #1f1f1f;
+  --v-white: #ffffff;
+  --v-muted: #888888;
+  --v-muted-light: #b0b0b0;
+  --v-accent: #ffffff;
+  --v-sale: #e74c3c;
+  --v-new: #2ecc71;
+  --v-drop: #9b59b6;
+  --v-banner-bg: #111111;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 @theme inline {
-  /* Couleurs de base */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-v-bg: var(--v-bg);
+  --color-v-card: var(--v-card);
+  --color-v-card-hover: var(--v-card-hover);
+  --color-v-border: var(--v-border);
+  --color-v-white: var(--v-white);
+  --color-v-muted: var(--v-muted);
+  --color-v-muted-light: var(--v-muted-light);
+  --color-v-accent: var(--v-accent);
+  --color-v-sale: var(--v-sale);
+  --color-v-new: var(--v-new);
+  --color-v-drop: var(--v-drop);
+  --color-v-banner-bg: var(--v-banner-bg);
 
-  /* Palette futuriste sport */
-  --color-neon-green: #00ff88;
-  --color-neon-blue: #00d4ff;
-  --color-neon-purple: #8b5cf6;
-  --color-neon-orange: #ff6b2b;
-  --color-dark-100: #1a1a2e;
-  --color-dark-200: #16213e;
-  --color-dark-300: #0f3460;
-  --color-dark-400: #0a0a0a;
-  --color-accent: #00ff88;
+  --font-sans: var(--font-syne), system-ui, sans-serif;
+  --font-body: var(--font-inter), system-ui, sans-serif;
 
-  /* Polices */
-  --font-sans: var(--font-inter), sans-serif;
-  --font-display: var(--font-rajdhani), sans-serif;
-  --font-mono: var(--font-space-mono), monospace;
-
-  /* Animations */
-  --animate-glow-pulse: glow 2s ease-in-out infinite;
-  --animate-slide-up: slideUp 0.6s ease-out;
+  --animate-slide-up: slideUp 0.6s ease-out forwards;
   --animate-fade-in: fadeIn 0.5s ease-out;
-  --animate-float: float 3s ease-in-out infinite;
-
-  @keyframes glow {
-    0%,
-    100% {
-      box-shadow: 0 0 20px #00ff88;
-    }
-    50% {
-      box-shadow: 0 0 40px #00ff88, 0 0 60px #00ff88;
-    }
-  }
+  --animate-float: float 4s ease-in-out infinite;
 
   @keyframes slideUp {
-    0% {
-      transform: translateY(20px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
+    0% { transform: translateY(30px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
   }
 
   @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
+    0% { opacity: 0; }
+    100% { opacity: 1; }
   }
 
   @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
   }
 
-  /* Background gradients */
-  --background-image-gradient-sport: linear-gradient(
-    135deg,
-    #0a0a0a 0%,
-    #1a1a2e 50%,
-    #0f3460 100%
-  );
-  --background-image-gradient-neon: linear-gradient(
-    135deg,
-    #00ff88 0%,
-    #00d4ff 50%,
-    #8b5cf6 100%
-  );
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-sans);
+  background-color: var(--v-bg);
+  color: var(--v-white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--v-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.marquee-track {
+  animation: marquee 20s linear infinite;
 }

@@ -2,6 +2,9 @@ import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { apolloClient } from "@/lib/apollo-client";
 import { GET_PRODUCT_BY_SLUG, GET_SIMILAR_PRODUCTS } from "@/queries/products";
+import TopBanner from "@/components/home/TopBanner";
+import Header from "@/components/home/Header";
+import Footer from "@/components/home/Footer";
 import ProductPageClient from "@/components/produit/ProductPageClient";
 import ProductCard from "@/components/shop/ProductCard";
 
@@ -54,8 +57,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const desc = shortDesc.replace(/<[^>]*>/g, "").slice(0, 160);
 
   return {
-    title: `${name} | Sport Boutique`,
-    description: desc || `Découvrez ${name} sur Sport Boutique`,
+    title: `${name} | FollowMee Officiel`,
+    description: desc || `Découvrez ${name} sur FollowMee`,
   };
 }
 
@@ -75,43 +78,42 @@ export default async function ProductPage({ params }: PageProps) {
   const categorySlugs = categories.map((c: { slug: string }) => c.slug).filter(Boolean);
   const databaseId = product.databaseId ?? Number(product.id?.replace(/\D/g, "")) ?? 0;
 
-  const similarProducts = await getSimilarProducts(
-    categorySlugs,
-    Number(databaseId),
-    4
-  );
+  const similarProducts = await getSimilarProducts(categorySlugs, Number(databaseId), 4);
 
   return (
-    <div className="min-h-screen bg-dark-400">
-      <ProductPageClient product={productWithId as Parameters<typeof ProductPageClient>[0]["product"]} />
+    <main className="min-h-screen bg-v-bg">
+      <TopBanner />
+      <Header />
+      <div className="pt-24 sm:pt-28">
+        <ProductPageClient product={productWithId as Parameters<typeof ProductPageClient>[0]["product"]} />
 
-      {/* Produits similaires */}
-      {similarProducts.length > 0 && (
-        <section className="border-t border-white/5 py-16 px-4 md:px-8">
-          <div className="max-w-7xl mx-auto">
-            <h2 className="font-display text-2xl md:text-3xl font-bold text-white uppercase tracking-wider mb-8">
-              Produits similaires
-            </h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
-              {(similarProducts as Record<string, unknown>[]).map((p) => (
-                <ProductCard
-                  key={p.id as string}
-                  product={{
-                    slug: p.slug as string,
-                    name: p.name as string,
-                    price: (p as { price?: string }).price ?? "",
-                    regularPrice:
-                      (p as { regularPrice?: string }).regularPrice ?? "",
-                    salePrice: (p as { salePrice?: string }).salePrice,
-                    image: (p as { image?: { sourceUrl: string; altText: string } }).image ?? null,
-                    stockStatus: (p as { stockStatus?: string }).stockStatus ?? "IN_STOCK",
-                  }}
-                />
-              ))}
+        {similarProducts.length > 0 && (
+          <section className="border-t border-v-border py-16 sm:py-20">
+            <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-8">
+              <h2 className="font-sans text-2xl sm:text-3xl font-extrabold mb-10">
+                Produits similaires
+              </h2>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+                {(similarProducts as Record<string, unknown>[]).map((p) => (
+                  <ProductCard
+                    key={p.id as string}
+                    product={{
+                      slug: p.slug as string,
+                      name: p.name as string,
+                      price: (p as { price?: string }).price ?? "",
+                      regularPrice: (p as { regularPrice?: string }).regularPrice ?? "",
+                      salePrice: (p as { salePrice?: string }).salePrice,
+                      image: (p as { image?: { sourceUrl: string; altText: string } }).image ?? null,
+                      stockStatus: (p as { stockStatus?: string }).stockStatus ?? "IN_STOCK",
+                    }}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        </section>
-      )}
-    </div>
+          </section>
+        )}
+      </div>
+      <Footer />
+    </main>
   );
 }

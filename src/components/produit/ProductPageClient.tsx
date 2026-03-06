@@ -37,8 +37,7 @@ function parsePrice(priceStr: string): number {
 }
 
 export default function ProductPageClient({ product }: ProductPageClientProps) {
-  const [selectedVariation, setSelectedVariation] =
-    useState<ProductVariation | null>(null);
+  const [selectedVariation, setSelectedVariation] = useState<ProductVariation | null>(null);
 
   const isVariableProduct = product.__typename === "VariableProduct";
   const variations = product.variations?.nodes ?? [];
@@ -52,9 +51,7 @@ export default function ProductPageClient({ product }: ProductPageClientProps) {
       };
       return [variationImg, ...mainImages.filter((i) => i.sourceUrl !== variationImg.sourceUrl)];
     }
-    const main = product.image
-      ? [product.image]
-      : [];
+    const main = product.image ? [product.image] : [];
     const gallery = product.galleryImages?.nodes ?? [];
     return [...main, ...gallery];
   }, [product, isVariableProduct, selectedVariation]);
@@ -64,10 +61,7 @@ export default function ProductPageClient({ product }: ProductPageClientProps) {
     : product.salePrice && product.salePrice !== product.regularPrice
       ? product.salePrice
       : product.regularPrice ?? product.price ?? "";
-  const isOnSale =
-    !isVariableProduct &&
-    product.salePrice &&
-    product.salePrice !== product.regularPrice;
+  const isOnSale = !isVariableProduct && product.salePrice && product.salePrice !== product.regularPrice;
   const isOutOfStock = (isVariableProduct && selectedVariation
     ? selectedVariation.stockStatus
     : product.stockStatus) === "OUT_OF_STOCK";
@@ -77,47 +71,40 @@ export default function ProductPageClient({ product }: ProductPageClientProps) {
   const mainImage = product.image?.sourceUrl ?? "";
 
   return (
-    <div className="max-w-7xl mx-auto px-4 md:px-8 py-12">
+    <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-8 py-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="grid md:grid-cols-2 gap-12"
+        className="grid md:grid-cols-2 gap-8 lg:gap-16"
       >
-        {/* Galerie */}
         <div>
-          <ProductGallery
-            images={galleryImages}
-            productName={product.name}
-          />
+          <ProductGallery images={galleryImages} productName={product.name} />
         </div>
 
-        {/* Infos produit */}
         <div className="space-y-6">
-          <h1 className="font-display text-3xl md:text-4xl font-bold text-white uppercase tracking-wider">
+          <h1 className="font-sans text-3xl sm:text-4xl font-extrabold">
             {product.name}
           </h1>
 
-          {/* Prix */}
           <div className="flex items-center gap-3">
-            <span className="text-2xl font-bold text-neon-green">
+            <span className="text-2xl font-sans font-bold">
               {displayPrice}
             </span>
             {isOnSale && (
-              <span className="text-lg text-white/50 line-through">
+              <span className="text-lg text-v-muted line-through">
                 {product.regularPrice}
               </span>
             )}
           </div>
 
-          {/* Stock */}
           <div className="flex items-center gap-2">
             <span
               className={`inline-block w-2 h-2 rounded-full ${
-                isOutOfStock ? "bg-red-500" : "bg-neon-green"
+                isOutOfStock ? "bg-v-sale" : "bg-v-new"
               }`}
             />
-            <span className="text-sm text-white/70">
+            <span className="text-sm text-v-muted">
               {isOutOfStock
                 ? "Épuisé"
                 : stockQuantity != null
@@ -126,7 +113,6 @@ export default function ProductPageClient({ product }: ProductPageClientProps) {
             </span>
           </div>
 
-          {/* Variants (taille/couleur) */}
           {isVariableProduct && variations.length > 0 && (
             <ProductVariants
               variations={variations}
@@ -135,7 +121,6 @@ export default function ProductPageClient({ product }: ProductPageClientProps) {
             />
           )}
 
-          {/* Bouton ajout panier */}
           <AddToCartButton
             productId={product.id}
             productName={product.name}
@@ -156,29 +141,27 @@ export default function ProductPageClient({ product }: ProductPageClientProps) {
             }
           />
 
-          {/* Description courte */}
           {product.shortDescription && (
             <div
-              className="text-white/80 text-sm leading-relaxed prose prose-invert prose-sm max-w-none"
+              className="text-v-muted text-sm leading-relaxed prose prose-invert prose-sm max-w-none"
               dangerouslySetInnerHTML={{ __html: product.shortDescription }}
             />
           )}
         </div>
       </motion.div>
 
-      {/* Description complète */}
       {product.description && (
         <motion.section
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.4 }}
-          className="mt-16 pt-12 border-t border-white/5"
+          className="mt-16 pt-12 border-t border-v-border"
         >
-          <h2 className="font-display text-xl font-bold text-white uppercase tracking-wider mb-4">
+          <h2 className="font-sans text-xl font-bold mb-4">
             Description
           </h2>
           <div
-            className="text-white/80 leading-relaxed prose prose-invert prose-sm max-w-none"
+            className="text-v-muted leading-relaxed prose prose-invert prose-sm max-w-none"
             dangerouslySetInnerHTML={{ __html: product.description }}
           />
         </motion.section>

@@ -33,16 +33,13 @@ interface ProductVariantsProps {
 export default function ProductVariants({
   variations,
   onSelect,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars -- prop requis pour cohérence API
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   selectedVariation,
 }: ProductVariantsProps) {
   const [selections, setSelections] = useState<Record<string, string>>({});
 
-  // Extraire les attributs uniques (ex: pa_taille, pa_couleur)
   const attributeNames = Array.from(
-    new Set(
-      variations.flatMap((v) => v.attributes.nodes.map((a) => a.name))
-    )
+    new Set(variations.flatMap((v) => v.attributes.nodes.map((a) => a.name)))
   );
 
   const getValuesForAttribute = (attrName: string) => {
@@ -73,14 +70,14 @@ export default function ProductVariants({
   if (variations.length === 0) return null;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-5">
       {attributeNames.map((attrName) => {
         const values = getValuesForAttribute(attrName);
         const label = getLabel(attrName);
 
         return (
           <div key={attrName}>
-            <p className="text-sm text-white/70 uppercase tracking-wider mb-2 font-display">
+            <p className="text-sm text-v-muted uppercase tracking-wider mb-3 font-sans font-medium">
               {label}
             </p>
             <div className="flex flex-wrap gap-2">
@@ -93,12 +90,12 @@ export default function ProductVariants({
                     key={value}
                     onClick={() => handleSelect(attrName, value)}
                     className={`
-                      px-4 py-2 rounded border text-sm font-medium transition-all
+                      px-4 py-2 rounded-full border text-sm font-medium transition-all
                       ${isSelected
-                        ? "border-neon-green bg-neon-green/20 text-neon-green"
-                        : "border-white/20 text-white/80 hover:border-neon-green/50 hover:text-neon-green"
+                        ? "border-v-white bg-v-white text-v-bg"
+                        : "border-v-border text-v-muted hover:border-v-muted-light hover:text-v-white"
                       }
-                      ${isColor ? "w-10 h-10 p-0" : ""}
+                      ${isColor ? "w-10 h-10 p-0 rounded-full" : ""}
                     `}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}

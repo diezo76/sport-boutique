@@ -46,9 +46,7 @@ export default function AddToCartButton({
   const [isAdding, setIsAdding] = useState(false);
 
   const isOutOfStock = stockStatus === "OUT_OF_STOCK";
-  const canAdd =
-    !isOutOfStock &&
-    (!isVariableProduct || (isVariableProduct && selectedVariation));
+  const canAdd = !isOutOfStock && (!isVariableProduct || (isVariableProduct && selectedVariation));
 
   const handleAddToCart = () => {
     if (!canAdd) {
@@ -62,21 +60,16 @@ export default function AddToCartButton({
 
     setIsAdding(true);
 
-    const itemId = isVariableProduct && selectedVariation
-      ? selectedVariation.id
-      : productId;
-    const itemName =
-      isVariableProduct && selectedVariation
-        ? `${productName} - ${selectedVariation.attributes.nodes.map((a) => a.value).join(" / ")}`
-        : productName;
-    const itemPrice =
-      isVariableProduct && selectedVariation
-        ? parsePrice(selectedVariation.price)
-        : price;
-    const itemImage =
-      isVariableProduct && selectedVariation?.image?.sourceUrl
-        ? selectedVariation.image.sourceUrl
-        : image;
+    const itemId = isVariableProduct && selectedVariation ? selectedVariation.id : productId;
+    const itemName = isVariableProduct && selectedVariation
+      ? `${productName} - ${selectedVariation.attributes.nodes.map((a) => a.value).join(" / ")}`
+      : productName;
+    const itemPrice = isVariableProduct && selectedVariation
+      ? parsePrice(selectedVariation.price)
+      : price;
+    const itemImage = isVariableProduct && selectedVariation?.image?.sourceUrl
+      ? selectedVariation.image.sourceUrl
+      : image;
 
     const sizeAttr = selectedVariation?.attributes.nodes.find(
       (a) => a.name.toLowerCase().includes("taille") || a.name.toLowerCase().includes("size")
@@ -105,11 +98,10 @@ export default function AddToCartButton({
       onClick={handleAddToCart}
       disabled={!canAdd || isAdding}
       className={`
-        w-full py-4 px-6 font-bold uppercase tracking-wider text-sm
-        rounded-lg transition-all duration-300
+        w-full py-4 px-6 font-sans font-bold text-sm rounded-full transition-all duration-300
         ${canAdd
-          ? "bg-neon-green text-black hover:shadow-[0_0_24px_rgba(0,255,136,0.5)]"
-          : "bg-white/10 text-white/50 cursor-not-allowed"
+          ? "bg-v-white text-v-bg hover:bg-v-muted-light"
+          : "bg-v-border text-v-muted cursor-not-allowed"
         }
       `}
       whileHover={canAdd ? { scale: 1.02 } : {}}
