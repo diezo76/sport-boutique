@@ -29,7 +29,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       className="group"
     >
       <Link href={`/produit/${product.slug}`} className="block">
-        <div className="relative aspect-[3/4] bg-v-gray-100 rounded-2xl overflow-hidden mb-3">
+        <div className="relative aspect-[3/4] bg-v-gray-100 rounded-xl sm:rounded-2xl overflow-hidden mb-2 sm:mb-3">
           {imageUrl ? (
             <Image
               src={imageUrl}
@@ -39,33 +39,33 @@ export default function ProductCard({ product }: ProductCardProps) {
             />
           ) : (
             <div className="absolute inset-0 flex items-center justify-center text-v-gray-500">
-              <span className="text-5xl">👕</span>
+              <span className="text-4xl sm:text-5xl">👕</span>
             </div>
           )}
 
-          <div className="absolute top-3 left-3 flex flex-col gap-2">
+          <div className="absolute top-2 left-2 sm:top-3 sm:left-3 flex flex-col gap-1.5">
             {isOnSale && (
-              <span className="bg-v-red text-white text-xs font-bold px-3 py-1 rounded-full">
+              <span className="bg-v-red text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 sm:px-3 sm:py-1 rounded-full">
                 Sale
               </span>
             )}
             {isOutOfStock && (
-              <span className="bg-v-gray-500 text-white text-xs font-bold px-3 py-1 rounded-full">
+              <span className="bg-v-gray-500 text-white text-[10px] sm:text-xs font-bold px-2 py-0.5 sm:px-3 sm:py-1 rounded-full">
                 Épuisé
               </span>
             )}
           </div>
         </div>
 
-        <h3 className="font-accent italic font-semibold text-base mb-1 group-hover:text-v-gray-700 transition-colors">
+        <h3 className="font-accent italic font-semibold text-sm sm:text-base mb-0.5 group-hover:text-v-gray-700 transition-colors line-clamp-1">
           {product.name}
         </h3>
-        <div className="flex items-center gap-2">
-          <span className="font-bold text-sm">
+        <div className="flex items-center gap-1.5 sm:gap-2">
+          <span className="font-bold text-xs sm:text-sm">
             {isOnSale ? product.salePrice : product.regularPrice}
           </span>
           {isOnSale && (
-            <span className="text-v-gray-500 text-sm line-through">
+            <span className="text-v-gray-500 text-xs line-through">
               {product.regularPrice}
             </span>
           )}

@@ -76,16 +76,16 @@ export default async function ProductPage({ params }: PageProps) {
     <main className="min-h-screen bg-v-white">
       <TopBanner />
       <Header />
-      <div className="pt-28 sm:pt-32">
+      <div className="pt-24 sm:pt-28 lg:pt-32">
         <ProductPageClient product={productWithId as Parameters<typeof ProductPageClient>[0]["product"]} />
 
         {similarProducts.length > 0 && (
-          <section className="border-t border-v-gray-100 py-16 sm:py-20">
-            <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10">
-              <h2 className="font-display text-4xl sm:text-5xl uppercase tracking-wide mb-10">
+          <section className="border-t border-v-gray-100 py-12 sm:py-16 lg:py-20">
+            <div className="mx-auto w-full max-w-[1400px] px-5 sm:px-8 lg:px-10">
+              <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl uppercase tracking-wide mb-6 sm:mb-10">
                 Similar Products
               </h2>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                 {(similarProducts as Record<string, unknown>[]).map((p) => (
                   <ProductCard
                     key={p.id as string}
