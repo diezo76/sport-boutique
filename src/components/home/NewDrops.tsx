@@ -4,64 +4,51 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
-interface Product {
-  slug: string;
-  name: string;
-  description: string;
-  price: string;
-  originalPrice?: string;
-  image?: string;
-  badge?: "Sale" | "Drop" | "New";
-}
-
-const products: Product[] = [
+const products = [
   {
-    slug: "shadow-drip",
-    name: "Shadow Drip",
-    description:
-      "Un hoodie minimaliste et sleek aux tons sombres avec des accents réfléchissants subtils.",
-    price: "69€",
-    originalPrice: "79€",
-    image: "/images/products/hoodie-dark.jpg",
-    badge: "Sale",
+    slug: "tshirt-bleu-blanc-rouge",
+    name: "T-shirt Bleu Blanc Rouge",
+    desc: "Un t-shirt sleek aux couleurs patriotiques avec des accents réfléchissants subtils pour un style street.",
+    price: "49€",
+    originalPrice: "59€",
+    image: "/images/1. T-shirt - Bleu Blanc Rouge/FOLLOW ME - Juv-3.jpg",
+    badge: "Sale" as const,
   },
   {
-    slug: "urban-phantom",
-    name: "Urban Phantom",
-    description:
-      "Un hoodie oversized avec des graphismes et une esthétique furtive inspirée des nuits urbaines.",
-    price: "99€",
-    image: "/images/products/hoodie-urban.jpg",
-    badge: "Drop",
+    slug: "tshirt-noir-jaune",
+    name: "T-shirt Noir Jaune",
+    desc: "Un t-shirt oversized avec des graphismes bold et une esthétique furtive inspirée des nuits urbaines.",
+    price: "49€",
+    image: "/images/2. T-shirt - Noir Jaune/FOLLOW ME - Juv-15.jpg",
+    badge: "Drop" as const,
   },
   {
-    slug: "neon-rebellion",
-    name: "Neon Rebellion",
-    description:
-      "Une pièce statement avec des détails néon vibrants et des influences street art.",
-    price: "89€",
-    image: "/images/products/tee-neon.jpg",
-    badge: "New",
+    slug: "tshirt-vert-orange",
+    name: "T-shirt Vert Orange",
+    desc: "Une pièce statement avec des détails vibrants et des influences street art pour un look audacieux.",
+    price: "49€",
+    image: "/images/3. T-shirt - Vert Orange/FOLLOW ME - Juv-20.jpg",
+    badge: "New" as const,
   },
 ];
 
-const badgeColors: Record<string, string> = {
-  Sale: "bg-v-sale text-white",
-  Drop: "bg-v-drop text-white",
-  New: "bg-v-new text-white",
+const badgeStyles: Record<string, string> = {
+  Sale: "bg-v-red text-white",
+  Drop: "bg-v-purple text-white",
+  New: "bg-v-green text-white",
 };
 
 export default function NewDrops() {
   return (
-    <section className="py-20 sm:py-28">
-      <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-8">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-12 gap-4">
-          <h2 className="font-sans text-3xl sm:text-4xl font-extrabold">
+    <section className="py-20 sm:py-28 bg-v-white">
+      <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between mb-14 gap-4">
+          <h2 className="font-display text-5xl sm:text-6xl uppercase tracking-wide">
             new drops
           </h2>
-          <p className="text-v-muted text-sm sm:text-base max-w-md">
+          <p className="text-v-gray-500 text-sm sm:text-base max-w-md leading-relaxed">
             Démarquez-vous avec notre dernière collection — designs bold,
-            tissus premium et coupes street-ready.
+            tissus premium et coupes street-ready. Une fois épuisé, c&apos;est terminé !
           </p>
         </div>
 
@@ -75,44 +62,33 @@ export default function NewDrops() {
               transition={{ duration: 0.5, delay: i * 0.1 }}
             >
               <Link href={`/produit/${product.slug}`} className="group block">
-                <div className="relative aspect-[3/4] bg-v-card rounded-2xl overflow-hidden mb-4">
-                  {product.image ? (
-                    <Image
-                      src={product.image}
-                      alt={product.name}
-                      fill
-                      className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
-                  ) : (
-                    <div className="absolute inset-0 flex items-center justify-center text-v-muted">
-                      <span className="text-6xl">👕</span>
-                    </div>
-                  )}
-
+                <div className="relative aspect-[3/4] bg-v-gray-100 rounded-2xl overflow-hidden mb-4">
+                  <Image
+                    src={encodeURI(product.image)}
+                    alt={product.name}
+                    fill
+                    className="object-cover group-hover:scale-105 transition-transform duration-700"
+                  />
                   {product.badge && (
-                    <span
-                      className={`absolute top-4 left-4 text-xs font-bold px-3 py-1 rounded-full ${badgeColors[product.badge]}`}
-                    >
+                    <span className={`absolute top-4 left-4 text-xs font-bold px-3 py-1 rounded-full ${badgeStyles[product.badge]}`}>
                       {product.badge}
                     </span>
                   )}
                 </div>
 
-                <div className="flex items-start justify-between gap-3">
-                  <div className="flex-1">
-                    <h3 className="font-sans font-bold text-base mb-1">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-accent italic font-semibold text-lg mb-1">
                       {product.name}
                     </h3>
-                    <p className="text-v-muted text-sm leading-relaxed line-clamp-2">
-                      {product.description}
+                    <p className="text-v-gray-500 text-sm leading-relaxed line-clamp-2">
+                      {product.desc}
                     </p>
                   </div>
                   <div className="text-right shrink-0">
-                    <span className="font-sans font-bold text-base">
-                      {product.price}
-                    </span>
+                    <span className="font-bold text-base">{product.price}</span>
                     {product.originalPrice && (
-                      <span className="block text-v-muted text-sm line-through">
+                      <span className="block text-v-gray-500 text-sm line-through">
                         {product.originalPrice}
                       </span>
                     )}

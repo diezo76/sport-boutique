@@ -36,8 +36,21 @@ function parsePrice(priceStr: string): number {
   return parseFloat(cleaned) || 0;
 }
 
+function StarRating() {
+  return (
+    <div className="flex gap-1 text-yellow-400">
+      {[1, 2, 3, 4, 5].map((i) => (
+        <svg key={i} className="w-4 h-4 fill-current" viewBox="0 0 20 20">
+          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+      ))}
+    </div>
+  );
+}
+
 export default function ProductPageClient({ product }: ProductPageClientProps) {
   const [selectedVariation, setSelectedVariation] = useState<ProductVariation | null>(null);
+  const [quantity, setQuantity] = useState(1);
 
   const isVariableProduct = product.__typename === "VariableProduct";
   const variations = product.variations?.nodes ?? [];
@@ -62,56 +75,40 @@ export default function ProductPageClient({ product }: ProductPageClientProps) {
       ? product.salePrice
       : product.regularPrice ?? product.price ?? "";
   const isOnSale = !isVariableProduct && product.salePrice && product.salePrice !== product.regularPrice;
-  const isOutOfStock = (isVariableProduct && selectedVariation
-    ? selectedVariation.stockStatus
-    : product.stockStatus) === "OUT_OF_STOCK";
-  const stockQuantity = isVariableProduct && selectedVariation
-    ? selectedVariation.stockQuantity
-    : (product as { stockQuantity?: number }).stockQuantity;
   const mainImage = product.image?.sourceUrl ?? "";
 
   return (
-    <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-8 py-12">
+    <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10 py-12">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="grid md:grid-cols-2 gap-8 lg:gap-16"
+        className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-20"
       >
         <div>
           <ProductGallery images={galleryImages} productName={product.name} />
         </div>
 
         <div className="space-y-6">
-          <h1 className="font-sans text-3xl sm:text-4xl font-extrabold">
+          <h1 className="font-accent italic text-3xl sm:text-4xl font-semibold">
             {product.name}
           </h1>
 
+          <StarRating />
+
           <div className="flex items-center gap-3">
-            <span className="text-2xl font-sans font-bold">
-              {displayPrice}
-            </span>
+            <span className="text-xl font-bold">{displayPrice}</span>
             {isOnSale && (
-              <span className="text-lg text-v-muted line-through">
-                {product.regularPrice}
-              </span>
+              <span className="text-v-gray-500 text-lg line-through">{product.regularPrice}</span>
             )}
           </div>
 
-          <div className="flex items-center gap-2">
-            <span
-              className={`inline-block w-2 h-2 rounded-full ${
-                isOutOfStock ? "bg-v-sale" : "bg-v-new"
-              }`}
+          {product.shortDescription && (
+            <div
+              className="text-v-gray-700 text-sm leading-relaxed prose prose-sm max-w-none"
+              dangerouslySetInnerHTML={{ __html: product.shortDescription }}
             />
-            <span className="text-sm text-v-muted">
-              {isOutOfStock
-                ? "Épuisé"
-                : stockQuantity != null
-                  ? `${stockQuantity} en stock`
-                  : "En stock"}
-            </span>
-          </div>
+          )}
 
           {isVariableProduct && variations.length > 0 && (
             <ProductVariants
@@ -121,11 +118,33 @@ export default function ProductPageClient({ product }: ProductPageClientProps) {
             />
           )}
 
+          <div>
+            <p className="text-sm font-medium mb-2">Quantity</p>
+            <div className="inline-flex items-center border border-v-gray-300 rounded-lg">
+              <button
+                type="button"
+                onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                className="w-10 h-10 flex items-center justify-center text-v-gray-700 hover:text-v-black"
+              >
+                -
+              </button>
+              <span className="w-12 text-center text-sm font-medium">{quantity}</span>
+              <button
+                type="button"
+                onClick={() => setQuantity((q) => q + 1)}
+                className="w-10 h-10 flex items-center justify-center text-v-gray-700 hover:text-v-black"
+              >
+                +
+              </button>
+            </div>
+          </div>
+
           <AddToCartButton
             productId={product.id}
             productName={product.name}
             price={parsePrice(product.price ?? product.regularPrice ?? "0")}
             image={mainImage}
+            quantity={quantity}
             stockStatus={isVariableProduct && selectedVariation ? selectedVariation.stockStatus : product.stockStatus ?? "IN_STOCK"}
             isVariableProduct={isVariableProduct}
             selectedVariation={
@@ -141,12 +160,13 @@ export default function ProductPageClient({ product }: ProductPageClientProps) {
             }
           />
 
-          {product.shortDescription && (
-            <div
-              className="text-v-muted text-sm leading-relaxed prose prose-invert prose-sm max-w-none"
-              dangerouslySetInnerHTML={{ __html: product.shortDescription }}
-            />
-          )}
+          <div className="flex gap-3 pt-2">
+            {["G", "f", "𝕏", "ig"].map((icon) => (
+              <button key={icon} type="button" className="w-10 h-10 rounded-full border border-v-gray-300 flex items-center justify-center text-sm text-v-gray-700 hover:border-v-black hover:text-v-black transition-colors">
+                {icon}
+              </button>
+            ))}
+          </div>
         </div>
       </motion.div>
 
@@ -155,13 +175,13 @@ export default function ProductPageClient({ product }: ProductPageClientProps) {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.3, duration: 0.4 }}
-          className="mt-16 pt-12 border-t border-v-border"
+          className="mt-16 pt-12 border-t border-v-gray-100"
         >
-          <h2 className="font-sans text-xl font-bold mb-4">
+          <h2 className="font-display text-3xl uppercase tracking-wide mb-4">
             Description
           </h2>
           <div
-            className="text-v-muted leading-relaxed prose prose-invert prose-sm max-w-none"
+            className="text-v-gray-700 leading-relaxed prose prose-sm max-w-none"
             dangerouslySetInnerHTML={{ __html: product.description }}
           />
         </motion.section>

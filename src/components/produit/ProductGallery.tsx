@@ -33,7 +33,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
   return (
     <div className="space-y-4">
       <motion.div
-        className="relative aspect-square overflow-hidden rounded-2xl bg-v-card"
+        className="relative aspect-[3/4] overflow-hidden rounded-2xl bg-v-gray-100"
         onMouseEnter={() => setIsZoomed(true)}
         onMouseLeave={() => setIsZoomed(false)}
         onMouseMove={handleMouseMove}
@@ -43,9 +43,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
       >
         {currentImage.sourceUrl ? (
           <div
-            className={`relative w-full h-full transition-transform duration-300 ${
-              isZoomed ? "scale-150" : "scale-100"
-            }`}
+            className={`relative w-full h-full transition-transform duration-300 ${isZoomed ? "scale-150" : "scale-100"}`}
             style={{ transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%` }}
           >
             <Image
@@ -58,7 +56,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
             />
           </div>
         ) : (
-          <div className="absolute inset-0 flex items-center justify-center text-v-muted">
+          <div className="absolute inset-0 flex items-center justify-center text-v-gray-500">
             <span className="text-6xl">📦</span>
           </div>
         )}
@@ -68,7 +66,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="absolute bottom-3 right-3 bg-v-bg/80 text-v-muted text-xs px-3 py-1 rounded-full"
+              className="absolute bottom-3 right-3 bg-v-black/70 text-v-white text-xs px-3 py-1 rounded-full"
             >
               Zoom actif
             </motion.div>
@@ -77,17 +75,15 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
       </motion.div>
 
       {displayImages.length > 1 && (
-        <div className="flex gap-3 overflow-x-auto pb-2">
-          {displayImages.map((img, i) => (
+        <div className="grid grid-cols-4 gap-3">
+          {displayImages.slice(0, 4).map((img, i) => (
             <motion.button
               key={i}
               onClick={() => setSelectedIndex(i)}
-              className={`relative flex-shrink-0 w-16 h-16 rounded-xl overflow-hidden border-2 transition-all ${
-                selectedIndex === i
-                  ? "border-v-white"
-                  : "border-v-border hover:border-v-muted"
+              className={`relative aspect-square rounded-xl overflow-hidden border-2 transition-all ${
+                selectedIndex === i ? "border-v-black" : "border-transparent hover:border-v-gray-300"
               }`}
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.98 }}
             >
               {img.sourceUrl ? (
@@ -96,12 +92,10 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
                   alt={img.altText || `${productName} ${i + 1}`}
                   fill
                   className="object-cover"
-                  sizes="64px"
+                  sizes="120px"
                 />
               ) : (
-                <div className="absolute inset-0 flex items-center justify-center text-xl">
-                  📦
-                </div>
+                <div className="absolute inset-0 flex items-center justify-center bg-v-gray-100 text-xl">📦</div>
               )}
             </motion.button>
           ))}

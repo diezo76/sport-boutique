@@ -54,11 +54,9 @@ export default function ProductVariants({
   const handleSelect = (attrName: string, value: string) => {
     const newSelections = { ...selections, [attrName]: value };
     setSelections(newSelections);
-
     const matchingVariation = variations.find((v) =>
       v.attributes.nodes.every((a) => newSelections[a.name] === a.value)
     );
-
     onSelect(matchingVariation ?? null);
   };
 
@@ -77,9 +75,7 @@ export default function ProductVariants({
 
         return (
           <div key={attrName}>
-            <p className="text-sm text-v-muted uppercase tracking-wider mb-3 font-sans font-medium">
-              {label}
-            </p>
+            <p className="text-sm font-accent italic mb-3">{label}</p>
             <div className="flex flex-wrap gap-2">
               {values.map((value) => {
                 const isSelected = selections[attrName] === value;
@@ -90,10 +86,10 @@ export default function ProductVariants({
                     key={value}
                     onClick={() => handleSelect(attrName, value)}
                     className={`
-                      px-4 py-2 rounded-full border text-sm font-medium transition-all
+                      px-5 py-2.5 rounded-full text-sm font-medium transition-all
                       ${isSelected
-                        ? "border-v-white bg-v-white text-v-bg"
-                        : "border-v-border text-v-muted hover:border-v-muted-light hover:text-v-white"
+                        ? "bg-v-black text-v-white"
+                        : "bg-v-gray-100 text-v-black hover:bg-v-gray-300"
                       }
                       ${isColor ? "w-10 h-10 p-0 rounded-full" : ""}
                     `}
@@ -101,7 +97,7 @@ export default function ProductVariants({
                     whileTap={{ scale: 0.98 }}
                     style={
                       isColor && value.match(/^#[0-9a-fA-F]{3,6}$/)
-                        ? { backgroundColor: value }
+                        ? { backgroundColor: isSelected ? value : value, opacity: isSelected ? 1 : 0.6 }
                         : undefined
                     }
                   >

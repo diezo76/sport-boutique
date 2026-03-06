@@ -29,7 +29,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       className="group"
     >
       <Link href={`/produit/${product.slug}`} className="block">
-        <div className="relative aspect-[3/4] bg-v-card rounded-2xl overflow-hidden mb-3">
+        <div className="relative aspect-[3/4] bg-v-gray-100 rounded-2xl overflow-hidden mb-3">
           {imageUrl ? (
             <Image
               src={imageUrl}
@@ -38,36 +38,34 @@ export default function ProductCard({ product }: ProductCardProps) {
               className="object-cover group-hover:scale-105 transition-transform duration-700"
             />
           ) : (
-            <div className="absolute inset-0 flex items-center justify-center text-v-muted">
+            <div className="absolute inset-0 flex items-center justify-center text-v-gray-500">
               <span className="text-5xl">👕</span>
             </div>
           )}
 
           <div className="absolute top-3 left-3 flex flex-col gap-2">
             {isOnSale && (
-              <span className="bg-v-sale text-white text-xs font-bold px-3 py-1 rounded-full">
+              <span className="bg-v-red text-white text-xs font-bold px-3 py-1 rounded-full">
                 Sale
               </span>
             )}
             {isOutOfStock && (
-              <span className="bg-v-muted text-white text-xs font-bold px-3 py-1 rounded-full">
+              <span className="bg-v-gray-500 text-white text-xs font-bold px-3 py-1 rounded-full">
                 Épuisé
               </span>
             )}
           </div>
-
-          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
         </div>
 
-        <h3 className="font-sans font-bold text-sm sm:text-base mb-1 group-hover:text-v-muted-light transition-colors">
+        <h3 className="font-accent italic font-semibold text-base mb-1 group-hover:text-v-gray-700 transition-colors">
           {product.name}
         </h3>
         <div className="flex items-center gap-2">
-          <span className="font-sans font-bold text-sm">
+          <span className="font-bold text-sm">
             {isOnSale ? product.salePrice : product.regularPrice}
           </span>
           {isOnSale && (
-            <span className="text-v-muted text-sm line-through">
+            <span className="text-v-gray-500 text-sm line-through">
               {product.regularPrice}
             </span>
           )}

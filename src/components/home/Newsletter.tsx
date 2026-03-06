@@ -18,64 +18,58 @@ export default function Newsletter() {
   };
 
   return (
-    <section className="py-20 sm:py-28">
-      <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-8">
+    <section className="py-16 sm:py-24 bg-v-white">
+      <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="bg-v-card rounded-3xl overflow-hidden"
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
         >
-          <div className="grid grid-cols-1 lg:grid-cols-2">
-            <div className="relative aspect-[4/3] lg:aspect-auto bg-v-border">
-              <Image
-                src="/images/newsletter-bg.jpg"
-                alt="Newsletter"
-                fill
-                className="object-cover"
+          <div className="relative aspect-[4/3] lg:aspect-auto lg:h-[400px] rounded-2xl overflow-hidden">
+            <Image
+              src={encodeURI("/images/4. T-shirt - Vert Jaune/FOLLOW ME - Juv-53.jpg")}
+              alt="Newsletter"
+              fill
+              className="object-cover"
+            />
+          </div>
+
+          <div>
+            <h2 className="font-display text-4xl sm:text-5xl lg:text-6xl uppercase tracking-wide leading-[0.9] mb-6">
+              SUBSCRIBE TO OUR NEWSLETTER NOW!
+            </h2>
+            <p className="text-v-gray-500 text-sm sm:text-base mb-8 max-w-md leading-relaxed">
+              Reçois les meilleurs drops, offres exclusives et conseils directement dans ta boîte mail.
+            </p>
+
+            <form onSubmit={handleSubmit} className="flex gap-3 max-w-md">
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter Your E-mail"
+                className="flex-1 border border-v-gray-300 rounded-full px-5 py-3.5 text-sm text-v-black placeholder:text-v-gray-500 focus:outline-none focus:border-v-black transition-colors bg-transparent"
+                required
               />
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent to-v-card/80 hidden lg:block" />
-            </div>
+              <button
+                type="submit"
+                className="px-7 py-3.5 bg-v-black text-v-white font-bold text-sm rounded-full hover:bg-v-gray-900 transition-colors shrink-0"
+              >
+                Subscribe
+              </button>
+            </form>
 
-            <div className="p-8 sm:p-12 lg:p-16 flex flex-col justify-center">
-              <span className="text-v-muted text-xs font-medium tracking-widest uppercase mb-4">
-                Man &bull; Woman
-              </span>
-              <h2 className="font-sans text-3xl sm:text-4xl font-extrabold mb-4">
-                Abonne-toi à notre newsletter !
-              </h2>
-              <p className="text-v-muted text-sm sm:text-base mb-8 max-w-sm">
-                Reçois les meilleurs drops, offres exclusives et conseils directement dans ta boîte mail.
+            {submitted && (
+              <p className="text-v-green text-sm mt-4 font-medium">
+                Merci ! Tu es inscrit(e).
               </p>
+            )}
 
-              <form onSubmit={handleSubmit} className="flex gap-3">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Ton adresse email"
-                  className="flex-1 bg-v-border/50 border border-v-border rounded-full px-5 py-3 text-sm text-v-white placeholder:text-v-muted focus:outline-none focus:border-v-muted transition-colors"
-                  required
-                />
-                <button
-                  type="submit"
-                  className="px-6 py-3 bg-v-white text-v-bg font-sans font-bold text-sm rounded-full hover:bg-v-muted-light transition-colors shrink-0"
-                >
-                  OK
-                </button>
-              </form>
-
-              {submitted && (
-                <p className="text-v-new text-sm mt-4">
-                  Merci ! Tu es inscrit(e).
-                </p>
-              )}
-
-              <p className="text-v-muted text-xs mt-4">
-                Newsletter hebdomadaire. Désabonnement à tout moment.
-              </p>
-            </div>
+            <p className="text-v-gray-500 text-xs mt-4">
+              Weekly newsletter. Unsubscribe anytime.
+            </p>
           </div>
         </motion.div>
       </div>

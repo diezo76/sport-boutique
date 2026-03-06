@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Syne } from "next/font/google";
+import { Inter, Bebas_Neue, Playfair_Display } from "next/font/google";
 import { Toaster } from "react-hot-toast";
 import CartDrawer from "@/components/shop/CartDrawer";
 import "./globals.css";
@@ -10,10 +10,17 @@ const inter = Inter({
   weight: ["300", "400", "500", "600", "700"],
 });
 
-const syne = Syne({
-  variable: "--font-syne",
+const bebas = Bebas_Neue({
+  variable: "--font-bebas",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: "400",
+});
+
+const playfair = Playfair_Display({
+  variable: "--font-playfair",
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
 });
 
 export const metadata: Metadata = {
@@ -31,7 +38,7 @@ export default function RootLayout({
   return (
     <html lang="fr" className="scroll-smooth">
       <body
-        className={`${inter.variable} ${syne.variable} bg-v-bg text-v-white antialiased`}
+        className={`${inter.variable} ${bebas.variable} ${playfair.variable} bg-v-white text-v-black antialiased`}
       >
         {children}
         <CartDrawer />
@@ -39,9 +46,9 @@ export default function RootLayout({
           position="bottom-right"
           toastOptions={{
             style: {
-              background: "#141414",
+              background: "#1a1a1a",
               color: "#ffffff",
-              border: "1px solid #1f1f1f",
+              border: "1px solid #333",
             },
           }}
         />

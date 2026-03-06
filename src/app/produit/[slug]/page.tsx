@@ -30,19 +30,11 @@ async function getProduct(slug: string): Promise<ProductResult | null> {
   return data?.product ?? null;
 }
 
-async function getSimilarProducts(
-  categorySlugs: string[],
-  excludeId: number,
-  limit = 4
-) {
+async function getSimilarProducts(categorySlugs: string[], excludeId: number, limit = 4) {
   if (categorySlugs.length === 0) return [];
   const { data } = await apolloClient.query<{ products?: { nodes?: unknown[] } }>({
     query: GET_SIMILAR_PRODUCTS,
-    variables: {
-      categoryIn: categorySlugs,
-      exclude: [excludeId],
-      first: limit,
-    },
+    variables: { categoryIn: categorySlugs, exclude: [excludeId], first: limit },
   });
   return data?.products?.nodes ?? [];
 }
@@ -81,17 +73,17 @@ export default async function ProductPage({ params }: PageProps) {
   const similarProducts = await getSimilarProducts(categorySlugs, Number(databaseId), 4);
 
   return (
-    <main className="min-h-screen bg-v-bg">
+    <main className="min-h-screen bg-v-white">
       <TopBanner />
       <Header />
-      <div className="pt-24 sm:pt-28">
+      <div className="pt-28 sm:pt-32">
         <ProductPageClient product={productWithId as Parameters<typeof ProductPageClient>[0]["product"]} />
 
         {similarProducts.length > 0 && (
-          <section className="border-t border-v-border py-16 sm:py-20">
-            <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-8">
-              <h2 className="font-sans text-2xl sm:text-3xl font-extrabold mb-10">
-                Produits similaires
+          <section className="border-t border-v-gray-100 py-16 sm:py-20">
+            <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10">
+              <h2 className="font-display text-4xl sm:text-5xl uppercase tracking-wide mb-10">
+                Similar Products
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
                 {(similarProducts as Record<string, unknown>[]).map((p) => (

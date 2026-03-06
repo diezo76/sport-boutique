@@ -1,29 +1,34 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 
 const slides = [
   {
-    id: 1,
-    title: "Drops Exclusifs, Impact Maximum",
+    title: "DROPS EXCLUSIFS,\nIMPACT MAXIMUM",
     desc: "Des collections limitées pour un style unique — une fois épuisé, c'est terminé.",
+    label: "Culture Communautaire",
+    image: "/images/1. T-shirt - Bleu Blanc Rouge/FOLLOW ME - Juv-6.jpg",
   },
   {
-    id: 2,
-    title: "La Mode Du Futur",
+    title: "LA MODE\nDU FUTUR",
     desc: "Des silhouettes oversized aux matériaux innovants, on repousse les limites du streetwear.",
+    label: "Future-Ready Fashion",
+    image: "/images/4. T-shirt - Vert Jaune/FOLLOW ME - Juv-43.jpg",
   },
   {
-    id: 3,
-    title: "L'Art Rencontre L'Attitude",
+    title: "L'ART\nRENCONTRE\nL'ATTITUDE",
     desc: "Des graphismes bold et un design urbain qui transforment chaque tenue en déclaration.",
+    label: "Art Meets Attitude",
+    image: "/images/3. T-shirt - Vert Orange/FOLLOW ME - Juv-21.jpg",
   },
   {
-    id: 4,
-    title: "Conçu Pour La Rue",
+    title: "CONÇU POUR\nLA RUE",
     desc: "Des tissus durables et un savoir-faire expert pour affronter le bitume avec style.",
+    label: "Built for the Streets",
+    image: "/images/5. T-shirt - Noir Orange/FOLLOW ME - Juv-34.jpg",
   },
 ];
 
@@ -40,63 +45,85 @@ export default function HeroSlider() {
   }, [next]);
 
   return (
-    <section className="relative min-h-screen flex items-center bg-v-bg overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-v-bg via-transparent to-v-bg pointer-events-none" />
+    <section className="relative h-screen overflow-hidden bg-v-black">
+      <AnimatePresence mode="wait">
+        <motion.div
+          key={current}
+          initial={{ opacity: 0, scale: 1.05 }}
+          animate={{ opacity: 1, scale: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.8 }}
+          className="absolute inset-0"
+        >
+          <Image
+            src={encodeURI(slides[current].image)}
+            alt={slides[current].label}
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        </motion.div>
+      </AnimatePresence>
 
-      <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-8 pt-32 pb-20 flex flex-col lg:flex-row items-center gap-16 relative z-10">
-        <div className="flex-1 max-w-2xl">
+      <div className="relative z-10 h-full flex flex-col justify-between mx-auto w-full max-w-[1400px] px-6 sm:px-10">
+        <div className="flex-1 flex items-center pt-32">
           <AnimatePresence mode="wait">
             <motion.div
               key={current}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.6 }}
+              className="max-w-2xl"
             >
-              <h1 className="font-sans text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.05] mb-6">
+              <h1 className="font-display text-6xl sm:text-7xl lg:text-[110px] leading-[0.9] text-white uppercase tracking-wide mb-6 whitespace-pre-line">
                 {slides[current].title}
               </h1>
-              <p className="text-v-muted text-lg sm:text-xl leading-relaxed mb-10 max-w-xl">
+              <p className="text-white/70 text-base sm:text-lg max-w-md mb-8 leading-relaxed">
                 {slides[current].desc}
               </p>
+              <Link
+                href="/boutique"
+                className="inline-flex items-center gap-3 bg-v-white text-v-black rounded-full pl-1.5 pr-6 py-1.5 hover:bg-v-gray-100 transition-colors group"
+              >
+                <span className="w-10 h-10 rounded-full bg-v-black text-v-white flex items-center justify-center group-hover:bg-v-gray-900 transition-colors">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </span>
+                <span className="font-medium text-sm">Shop now</span>
+              </Link>
             </motion.div>
           </AnimatePresence>
-
-          <div className="flex flex-wrap gap-4">
-            <Link
-              href="/boutique"
-              className="px-8 py-4 bg-v-white text-v-bg font-sans font-bold text-sm rounded-full hover:bg-v-muted-light transition-colors"
-            >
-              Shop now
-            </Link>
-            <Link
-              href="/boutique"
-              className="px-8 py-4 border border-v-border text-v-white font-sans font-bold text-sm rounded-full hover:bg-v-card transition-colors"
-            >
-              Shop now
-            </Link>
-          </div>
         </div>
 
-        {/* Slide indicators */}
-        <div className="flex lg:flex-col gap-6 items-center">
+        <div className="pb-10 grid grid-cols-4 gap-4">
           {slides.map((slide, i) => (
             <button
-              key={slide.id}
+              key={i}
               type="button"
               onClick={() => setCurrent(i)}
-              className={`flex items-center gap-3 transition-all duration-300 ${
-                i === current ? "text-v-white" : "text-v-muted"
-              }`}
+              className="text-left group"
             >
-              <span className="font-sans text-sm font-bold">
+              <div className="h-0.5 bg-white/20 mb-4 rounded-full overflow-hidden">
+                <motion.div
+                  className="h-full bg-white"
+                  initial={{ width: 0 }}
+                  animate={{ width: i === current ? "100%" : "0%" }}
+                  transition={i === current ? { duration: 5, ease: "linear" } : { duration: 0.3 }}
+                />
+              </div>
+              <span className="font-display text-xl sm:text-2xl text-white/60 group-hover:text-white transition-colors block mb-1">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <span
-                className={`h-px transition-all duration-500 ${
-                  i === current ? "w-12 bg-v-white" : "w-6 bg-v-muted"
-                }`}
-              />
+              <span className={`text-xs sm:text-sm transition-colors ${
+                i === current ? "text-white" : "text-white/40"
+              }`}>
+                {slide.label}
+              </span>
             </button>
           ))}
         </div>

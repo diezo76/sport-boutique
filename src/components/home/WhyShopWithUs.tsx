@@ -5,75 +5,78 @@ import { motion } from "framer-motion";
 const features = [
   {
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-          d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.079-.504 1.032-1.123a18.007 18.007 0 00-1.17-4.969l-1.102-2.645A2.625 2.625 0 0016.498 8.25H15M9 18.75H6.75M15 8.25v-.75A2.25 2.25 0 0012.75 5.25h-6A2.25 2.25 0 004.5 7.5v.75" />
       </svg>
     ),
-    title: "Livraison offerte",
-    desc: "Reçois ton streetwear vite et sans frais supplémentaires sur toutes les commandes.",
+    title: "Free Delivery",
+    desc: "Reçois ton streetwear vite et sans frais, livraison offerte sur toutes les commandes.",
   },
   {
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-          d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
       </svg>
     ),
-    title: "Paiement 100% sécurisé",
-    desc: "Achète en confiance avec des méthodes de paiement chiffrées et fiables.",
+    title: "100% Secure Payment",
+    desc: "Achète en confiance avec des méthodes de paiement chiffrées, sûres et fiables.",
   },
   {
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-          d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M21.75 9v.906a2.25 2.25 0 01-1.183 1.981l-6.478 3.488M2.25 9v.906a2.25 2.25 0 001.183 1.981l6.478 3.488m8.839 2.51l-4.66-2.51m0 0l-1.023-.55a2.25 2.25 0 00-2.134 0l-1.022.55m0 0l-4.661 2.51" />
       </svg>
     ),
-    title: "Retour sous 30 jours",
-    desc: "Pas la bonne taille ? Pas de souci. Retourne ou échange sans prise de tête.",
+    title: "30 Days Return",
+    desc: "Pas la bonne taille ? Pas de souci. Retourne ou échange sans prise de tête sous 30 jours.",
   },
   {
     icon: (
-      <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
-          d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
+      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
+        <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
       </svg>
     ),
-    title: "Support 24/7",
+    title: "24/7 Support",
     desc: "Des questions ? Notre équipe est là pour toi à tout moment, partout.",
   },
 ];
 
 export default function WhyShopWithUs() {
   return (
-    <section className="py-20 sm:py-28">
-      <div className="mx-auto w-full max-w-[1400px] px-4 sm:px-8">
-        <h2 className="font-sans text-3xl sm:text-4xl font-extrabold text-center mb-14">
-          Pourquoi Acheter Chez Nous ?
-        </h2>
+    <section className="py-24 sm:py-32 bg-v-white border-t border-v-gray-100">
+      <div className="mx-auto w-full max-w-[1400px] px-6 sm:px-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+          <div>
+            <h2 className="font-display text-5xl sm:text-6xl lg:text-7xl uppercase tracking-wide leading-[0.9] mb-6">
+              WHY SHOP WITH US?
+            </h2>
+            <p className="text-v-gray-500 text-base leading-relaxed max-w-md">
+              On te couvre avec un shopping sans prise de tête, un service
+              top-tier et des garanties qui te donnent confiance à chaque achat.
+            </p>
+          </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {features.map((feat, i) => (
-            <motion.div
-              key={feat.title}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: i * 0.1 }}
-              className="bg-v-card rounded-2xl p-6 sm:p-8 text-center hover:bg-v-card-hover transition-colors duration-300"
-            >
-              <div className="w-14 h-14 bg-v-border rounded-2xl flex items-center justify-center mx-auto mb-5 text-v-white">
-                {feat.icon}
-              </div>
-              <h3 className="font-sans font-bold text-base mb-2">
-                {feat.title}
-              </h3>
-              <p className="text-v-muted text-sm leading-relaxed">
-                {feat.desc}
-              </p>
-            </motion.div>
-          ))}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
+            {features.map((feat, i) => (
+              <motion.div
+                key={feat.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: i * 0.1 }}
+              >
+                <div className="w-12 h-12 rounded-full border border-v-gray-300 flex items-center justify-center mb-4 text-v-black">
+                  {feat.icon}
+                </div>
+                <h3 className="font-bold text-lg mb-2">
+                  {feat.title}
+                </h3>
+                <p className="text-v-gray-500 text-sm leading-relaxed">
+                  {feat.desc}
+                </p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

@@ -41,10 +41,10 @@ export default async function BoutiquePage({
   const products = await getProducts(category);
 
   return (
-    <main className="min-h-screen bg-v-bg">
+    <main className="min-h-screen bg-v-white">
       <TopBanner />
       <Header />
-      <div className="pt-24 sm:pt-28">
+      <div className="pt-28 sm:pt-32">
         <ProductGrid products={products} />
       </div>
       <Footer />
